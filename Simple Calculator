@@ -1,0 +1,89 @@
+import java.util.Scanner;
+
+public class Calculator {
+    public void run(){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Input first number: ");
+        int num1 = sc.nextInt();
+        System.out.println(num1);
+
+        System.out.println("Enter operator: ");
+        String op = sc.next();
+        System.out.println(num1 + op);
+
+        if(op.equals("@")){
+            for (int i = 2; i < num1/2; i++) {
+                if(i * i == num1){
+                    System.out.println("The square root is: " + i);
+                }
+            }
+            System.out.println();
+            System.out.println();
+            run();
+        }
+
+        System.out.println("Input second number: ");
+        int num2 = sc.nextInt();
+        String temp = num1 + op + num2;
+        System.out.println(num1 + op + num2);
+
+//        System.out.println("num 1 is: " + num1 + " num 2 is: " + num2 + " operator is: " + op);
+
+        System.out.println("Calculate, start again, or delete last character?(c/s/b)");
+        String answer = sc.next();
+        switch (answer) {
+            case "c": {
+                boolean isValid = true;
+                int sum = 0;
+                switch (op) {
+                    case "+":
+                        sum = num1 + num2;
+                        break;
+                    case "-":
+                        sum = num1 - num2;
+                        break;
+                    case "*":
+                        sum = num1 * num2;
+                        break;
+                    case "/":
+                        if (num2 != 0) {
+                            sum = num1 / num2;
+                        } else {
+                            isValid = false;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                if (isValid) {
+                    System.out.println(num1 + op + num2 + "=" + sum);
+                } else {
+                    System.out.println("Error!");
+                }
+                System.out.println();
+                System.out.println();
+                run();
+            }
+            case "s": {
+                System.out.println();
+                System.out.println();
+                run();
+            }
+            case "b": {
+                String temp1 = removeLastChar(temp);
+                System.out.println(temp1);
+            }
+            default:
+//                System.out.println("Error! Start again!");
+                System.out.println();
+                System.out.println();
+                run();
+                break;
+        }
+    }
+    public static String removeLastChar(String s){
+        s = s.substring(0, s.length()-1);
+        return s;
+    }
+}
