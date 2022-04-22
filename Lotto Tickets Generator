@@ -1,0 +1,46 @@
+import java.util.Arrays;
+import java.util.Random;
+
+public class LottoRun {
+
+    public void generateTicket(){
+        Integer[] lotto = new Integer[9];
+        Random r = new Random();
+        int nullCounter = getLength(lotto);
+        while(nullCounter > 4){
+            int location = r.nextInt(lotto.length);
+            System.out.println(location);
+            if(lotto[location] != null){
+                continue;
+            } else if(lotto[location] == null){
+                switch (location) {
+                    case 0 -> lotto[location] = r.nextInt(10);
+                    case 1 -> lotto[location] = r.nextInt(20 - 11) + 11;
+                    case 2 -> lotto[location] = r.nextInt(30 - 21) + 21;
+                    case 3 -> lotto[location] = r.nextInt(40 - 31) + 31;
+                    case 4 -> lotto[location] = r.nextInt(50 - 41) + 41;
+                    case 5 -> lotto[location] = r.nextInt(60 - 51) + 51;
+                    case 6 -> lotto[location] = r.nextInt(70 - 61) + 61;
+                    case 7 -> lotto[location] = r.nextInt(80 - 71) + 71;
+                    case 8 -> lotto[location] = r.nextInt(90 - 81) + 81;
+                }
+            }
+            nullCounter--;
+        }
+        if (nullCounter == 4){
+            System.out.println(Arrays.toString(lotto));
+        }else{
+            System.out.println("Something is wrong!");
+        }
+    }
+
+    public static int getLength(Integer[] arr){
+        int count = 0;
+        for (Integer integer : arr) {
+            if (integer == null) {
+                ++count;
+            }
+        }
+        return count;
+    }
+}
