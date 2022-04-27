@@ -1,0 +1,94 @@
+package Java.Calculator;
+
+import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
+
+public class ArrayPractice {
+    public void generateCustomArray(){
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input the array length:");
+        int customLength = sc.nextInt();
+        int[] customArray = new int[customLength];
+        System.out.println("Input the max value of random numbers:");
+        int maxValue = sc.nextInt();
+        System.out.println("Input the min value of random numbers:");
+        int minValue = sc.nextInt();
+        Random r = new Random();
+        for (int i = 0; i < customArray.length; i++) {
+            customArray[i] = r.nextInt(maxValue - minValue) + minValue;
+        }
+        System.out.println(Arrays.toString(customArray));
+        System.out.println("Input the number you want to check:");
+        int numberToCheck = sc.nextInt();
+        System.out.println("The number you want to check is repeated " + numberCounter(customArray, numberToCheck) + " of times.");
+        System.out.println("Let's check how many of those numbers in the array have square roots!!");
+        //Add if to avoid error when the array doesn't have square root
+        System.out.println("These numbers " + Arrays.toString(squareRootCountCalculator(customArray)) + " have square roots!!" );
+        System.out.println("The biggest root is: " + biggestSquareRoot((squareRootCountCalculator(customArray))));
+        System.out.println("The smallest root is: " + smallestSquareRoot((squareRootCountCalculator(customArray))));
+    }
+
+    public static int numberCounter(int[] array, int number){
+        int counter = 0;
+        for (int i = 1; i < array.length; i++) {
+            if(number == array[i]){
+                counter++;
+            }
+        }
+        return counter;
+    }
+
+    public static int[] squareRootCountCalculator(int[] array){
+        int[] squareRootNumbers = new int[array.length];
+        int squareRootsCounter = 0;
+        for (int i = 0; i < array.length; i++){
+            if(sqrtCheck(array[i])){
+                squareRootNumbers[i] = array[i];
+                squareRootsCounter++;
+            }
+        }
+        int[] finalSquareRootNumbers = new int[squareRootsCounter];
+        int j = 0;
+        for (int i = 0; i < squareRootNumbers.length; i++) {
+            if(squareRootNumbers[i] !=0){
+                finalSquareRootNumbers[j] = squareRootNumbers[i];
+                j++;
+            }
+        }
+        return finalSquareRootNumbers;
+    }
+    public static boolean sqrtCheck(int a){
+        boolean check = false;
+        for (int i = 2; i < a/2; i++) {
+            if(i * i == a){
+                check = true;
+                break;
+            }
+        }
+        return check;
+    }
+
+    public static int biggestSquareRoot(int[] ar){
+        int biggestSquareRoot = ar[0];
+        ar = squareRootCountCalculator(ar);
+        for (int i = 1; i < ar.length; i++) {
+            if(biggestSquareRoot < ar[i]){
+                biggestSquareRoot = ar[i];
+            }
+        }
+        return  biggestSquareRoot;
+    }
+
+    public static int smallestSquareRoot(int[] ar){
+        int smallestSquareRoot = ar[0];
+        ar = squareRootCountCalculator(ar);
+        for (int i = 1; i < ar.length; i++) {
+            if(smallestSquareRoot > ar[i]){
+                smallestSquareRoot = ar[i];
+            }
+        }
+        return  smallestSquareRoot;
+    }
+}
