@@ -1,0 +1,70 @@
+import java.util.Arrays;
+
+public class DynamicArray {
+    private Integer[] defaultLengthArray;
+    private int numItems;
+
+    //The array is created with a default length of 10
+    public DynamicArray(){
+        defaultLengthArray = new Integer[10];
+        numItems = 0;
+    }
+
+    //Adds an element at the end of the array
+    //If the element is out of bounds, the array grows and then adds
+    public void addItem(int num){
+        if(numItems == defaultLengthArray.length){
+            grow();
+            defaultLengthArray[numItems] = num;
+        } else {
+            defaultLengthArray[numItems] = num;
+            numItems++;
+        }
+    }
+
+    //Adds an item at a specific index
+    //If the index is occupied, it shifts the elements of the array from the desired index to the right
+    //There is a problem with this which is that the array is growing twice when the index is over 20
+    public void addItemAtIndex(Integer item, int index){
+        Integer[] tempArray;
+        while(index > defaultLengthArray.length){
+            grow();
+        }
+
+        if(defaultLengthArray[index] == null){
+            defaultLengthArray[index] = item;
+        } else {
+            tempArray = Arrays.copyOfRange(defaultLengthArray, index, defaultLengthArray.length);
+            defaultLengthArray = tempArray;
+        }
+        defaultLengthArray[index] = item;
+        numItems++;
+    }
+
+    //Grows the array with twice its current size
+    private void grow(){
+        Integer[] tempArray = new Integer[defaultLengthArray.length * 2];
+        for (int i = 0; i < numItems; i++) {
+            tempArray[i] = defaultLengthArray[i];
+        }
+        defaultLengthArray = tempArray;
+    }
+
+    //Gets an item by its index
+    public Integer getItem(int index){
+        return defaultLengthArray[index];
+    }
+
+    //Replaces an item with null
+    public void removeItem(int index){
+        defaultLengthArray[index] = null;
+    }
+
+    //Returns the array as a String
+    @Override
+    public String toString() {
+        return "DynamicArray{" +
+                "defaultLengthArray=" + Arrays.toString(defaultLengthArray) +
+                '}';
+    }
+}
